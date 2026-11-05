@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1, viewport-fit=cover" name="viewport"/>
+<title>Five Ingredients to Check if OKRs are Useful for Your Organization · OrgVolution</title>
+<meta content="cover" name="claude:viewport-fit-sides"/>
+<link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<style>
+/* Layout: app-like mobile flow; photo screens, swipe rows, one type-as-image screen, sticky booking bar */
+:root {
+  --wald: #052D1C;
+  --wald-2: #0B3D27;
+  --wald-soft: #DCE6E0;
+  --helios: #FFB108;
+  --ink: #16181A;
+  --muted: #3E5248;
+  --paper: #FFFFFF;
+  --line: #E3E8E5;
+  --font: 'Quicksand', 'Nunito', 'Varela Round', system-ui, sans-serif;
+  --gl: max(20px, env(safe-area-inset-left, 0px));
+  --gr: max(20px, env(safe-area-inset-right, 0px));
+  color-scheme: light;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+body { background: var(--paper); color: var(--ink); font-family: var(--font); font-size: 17px; line-height: 1.55; padding-bottom: calc(84px + env(safe-area-inset-bottom, 0px)); }
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 30; background: var(--paper); }
+a { color: inherit; }
+:focus-visible { outline: 3px solid var(--helios); outline-offset: 3px; }
+h1, h2, h3 { font-weight: 700; line-height: 1.06; margin: 0; text-wrap: balance; letter-spacing: -0.02em; }
+p { margin: 0; }
+.wrap { width: 100%; max-width: 1180px; margin: 0 auto; padding-left: var(--gl); padding-right: var(--gr); }
+.eyebrow { font-size: 13px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); }
+.kicker { font-size: 13px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--helios); }
+
+/* Header */
+.top { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 20; background: var(--paper); border-bottom: 1px solid var(--line); }
+.top .wrap { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding-block: 12px; }
+.logo { display: flex; align-items: center; text-decoration: none; }
+.logo svg { height: 26px; width: auto; display: block; }
+.menu-btn { display: inline-flex; align-items: center; gap: 10px; min-height: 44px; padding: 0 16px; border: 2px solid var(--wald); border-radius: 999px; background: var(--paper); color: var(--wald); font: 600 16px var(--font); cursor: pointer; }
+.menu-btn .bars { display: grid; gap: 4px; }
+.menu-btn .bars span { display: block; width: 16px; height: 2px; background: currentColor; }
+.nav { border-top: 1px solid var(--line); background: var(--paper); }
+.nav ul { list-style: none; margin: 0; padding: 8px 0 20px; display: grid; }
+.nav a { display: block; padding: 14px 0; font-size: 26px; font-weight: 700; text-decoration: none; color: var(--wald); border-bottom: 1px solid var(--line); }
+.desk-nav { display: none; }
+
+/* Buttons */
+.btn { display: inline-flex; align-items: center; justify-content: center; min-height: 54px; padding: 0 26px; border-radius: 999px; font-weight: 700; font-size: 17px; text-decoration: none; text-align: center; }
+.btn-primary { background: var(--helios); color: var(--wald); }
+.btn-primary:hover { background: #FFC23D; }
+.btn-ghost { color: var(--wald); border: 2px solid var(--wald); }
+.btn-dark { background: var(--wald); color: #FFFFFF; }
+
+/* Photo screens */
+.photo { position: relative; overflow: hidden; background: #46645A; color: #FFFFFF; isolation: isolate; max-width: 100%; }
+.photo > img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: -2; }
+.photo.scrim::after { content: ""; position: absolute; inset: 0; z-index: -1; background: linear-gradient(to top, rgba(5,45,28,.94) 0%, rgba(5,45,28,.55) 45%, rgba(5,45,28,0) 78%); }
+
+/* Hero */
+.hero-photo { aspect-ratio: 4 / 5; max-height: 660px; display: flex; align-items: flex-end; }
+.hero-photo .inner { padding-block: 28px; }
+.hero h1 { font-size: clamp(50px, 14vw, 104px); }
+.hero h1 em { font-style: normal; color: var(--helios); }
+.hero-text { padding-block: 24px 8px; display: grid; gap: 20px; }
+.hero-text .lead { font-size: 18px; max-width: 34em; }
+.hero-text .btn-ghost { justify-self: start; }
+
+/* Swipe rows */
+.swipe { display: flex; gap: 12px; overflow-x: auto; scroll-snap-type: x mandatory; padding-left: var(--gl); padding-right: var(--gr); scroll-padding-left: var(--gl); scrollbar-width: none; -webkit-overflow-scrolling: touch; }
+.swipe::-webkit-scrollbar { display: none; }
+.swipe > * { scroll-snap-align: start; flex: none; }
+.swipe-hint { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; }
+.swipe-hint span { font-size: 14px; font-weight: 600; color: var(--muted); }
+
+/* Angebote */
+.offers { padding-block: 56px 8px; display: grid; gap: 16px; }
+.offer-card { width: 86%; max-width: 560px; aspect-ratio: 4 / 5; border-radius: 22px; display: flex; align-items: flex-end; }
+.offer-card .inner { padding: 22px; display: grid; gap: 14px; width: 100%; }
+.offer-card h2 { font-size: clamp(32px, 9vw, 48px); }
+.chips { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px; }
+.chips a { display: inline-flex; align-items: center; min-height: 44px; padding: 0 16px; border-radius: 999px; background: rgba(255,255,255,.95); color: var(--wald); font-weight: 700; font-size: 15px; text-decoration: none; }
+.chips a:hover { background: var(--helios); }
+
+/* Logos */
+.logos { padding-block: 40px 56px; }
+.logos .wrap { display: grid; gap: 16px; padding-bottom: 16px; }
+.marquee { overflow-x: auto; overflow-y: hidden; width: 100%; scrollbar-width: none; cursor: grab; touch-action: pan-x pan-y; -webkit-mask-image: linear-gradient(to right, transparent, #000 6%, #000 94%, transparent); mask-image: linear-gradient(to right, transparent, #000 6%, #000 94%, transparent); }
+.marquee::-webkit-scrollbar { display: none; }
+.marquee.dragging { cursor: grabbing; }
+.track { display: flex; width: max-content; }
+.set { display: flex; gap: 12px; padding-right: 12px; }
+.logo-slot { flex: none; width: 132px; height: 72px; border: 2px dashed #B7C9BF; border-radius: 12px; display: flex; align-items: center; justify-content: center; text-align: center; font-weight: 700; font-size: 14px; color: var(--muted); padding: 6px; }
+.logo-img { flex: none; height: 76px; display: flex; align-items: center; justify-content: center; padding: 0 22px; }
+.logo-img img { width: auto; max-width: none; object-fit: contain; display: block; pointer-events: none; user-select: none; -webkit-user-drag: none; }
+
+/* Type as image */
+.problem { background: var(--helios); color: var(--wald); padding-block: 56px 60px; overflow: hidden; }
+.problem .wrap { display: grid; gap: 28px; }
+.mega { font-size: clamp(64px, 19vw, 150px); line-height: .9; letter-spacing: -0.045em; font-weight: 700; }
+.mega span { display: block; }
+.mega-sub { font-size: clamp(26px, 7.4vw, 44px); font-weight: 700; line-height: 1.1; letter-spacing: -0.02em; max-width: 16em; }
+.problem .q { font-size: 20px; font-weight: 700; padding-top: 22px; border-top: 3px solid var(--wald); max-width: 30em; }
+.problem .small { font-size: 16px; display: grid; gap: 12px; max-width: 34em; }
+
+/* Workshops */
+.workshops { background: var(--wald); color: #FFFFFF; padding-block: 56px; display: grid; gap: 18px; }
+.workshops .wrap h2 { font-size: clamp(32px, 9vw, 52px); }
+.workshops .swipe-hint span { color: #B7C9BF; }
+.ws-card { width: 66%; max-width: 300px; text-decoration: none; color: #FFFFFF; display: grid; gap: 10px; }
+.ws-img { aspect-ratio: 3 / 4; border-radius: 18px; }
+.ws-card b { font-size: 19px; line-height: 1.25; }
+
+/* Haltung */
+.team-photo { aspect-ratio: 4 / 5; max-height: 680px; display: flex; align-items: flex-end; }
+.team-photo .inner { padding-block: 28px; display: grid; gap: 16px; }
+.team-photo h2 { font-size: clamp(36px, 10vw, 64px); }
+.badges { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px; }
+.badges li { display: inline-flex; align-items: center; min-height: 40px; padding: 0 14px; border-radius: 999px; background: var(--helios); color: var(--wald); font-weight: 700; font-size: 15px; }
+
+/* Case */
+.case { padding-block: 56px; }
+.case .wrap { display: grid; gap: 16px; }
+.case-card { border-radius: 22px; overflow: hidden; background: var(--wald-soft); }
+.case-card summary { list-style: none; cursor: pointer; display: block; }
+.case-card summary::-webkit-details-marker { display: none; }
+.case-head { aspect-ratio: 4 / 3; display: flex; align-items: flex-end; }
+.case-head .inner { padding: 22px 20px; display: grid; gap: 10px; width: 100%; }
+.case-head h3 { font-size: clamp(28px, 8vw, 44px); }
+.case-toggle { display: inline-flex; align-items: center; gap: 10px; justify-self: start; min-height: 44px; padding: 0 16px; border-radius: 999px; background: #FFFFFF; color: var(--wald); font-weight: 700; font-size: 16px; }
+.case-toggle .plus { font-size: 22px; line-height: 1; transition: transform .2s; }
+.case-card[open] .case-toggle .plus { transform: rotate(45deg); }
+.case-card[open] .label-open, .case-card:not([open]) .label-close { display: none; }
+.case-body { padding: 22px 20px 26px; display: grid; gap: 12px; }
+.field { border: 2px dashed #8FA79A; border-radius: 12px; padding: 14px 16px; display: grid; gap: 4px; background: var(--paper); }
+.field b { font-size: 12px; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+.field span { color: var(--muted); font-style: italic; }
+
+/* Final with evolving mark */
+.final { position: relative; overflow: hidden; background: var(--wald); color: #FFFFFF; padding-block: 72px 88px; }
+.final .wrap { position: relative; display: grid; gap: 24px; z-index: 1; }
+.final h2 { font-size: clamp(42px, 12vw, 80px); max-width: 9em; }
+.final h2 em { font-style: normal; color: var(--helios); }
+.final .btn { justify-self: start; }
+.placeholder-url { font-size: 13px; color: #B7C9BF; }
+.big-mark { position: absolute; right: -34%; bottom: -30%; width: 92%; max-width: 640px; height: auto; z-index: 0; }
+.big-mark use { transition: opacity .6s ease; }
+
+footer { background: var(--wald); color: #B7C9BF; border-top: 1px solid #2A4A3C; font-size: 15px; }
+footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; padding-block: 24px; }
+footer a { color: #DCE6E0; }
+
+/* Sticky booking bar (mobile) */
+.bookbar { position: fixed; left: 0; right: 0; bottom: 0; z-index: 25; padding: 12px var(--gr) calc(12px + env(safe-area-inset-bottom, 0px)) var(--gl); background: rgba(255,255,255,.96); border-top: 1px solid var(--line); display: flex; align-items: center; gap: 12px; }
+.bookbar .btn { flex: 1; min-height: 52px; }
+.bookbar svg { width: 34px; height: auto; flex: none; }
+
+@media (min-width: 900px) {
+  body { padding-bottom: 0; }
+  .bookbar, .menu-btn, .nav { display: none !important; }
+  .logo svg { height: 30px; }
+  .desk-nav { display: flex; align-items: center; gap: 28px; font-weight: 600; }
+  .desk-nav a { text-decoration: none; color: var(--wald); }
+  .desk-nav .btn { min-height: 46px; }
+  .hero-photo { aspect-ratio: 21 / 9; max-height: none; }
+  .hero-text { grid-template-columns: minmax(0, 1.4fr) auto auto; align-items: center; column-gap: 24px; padding-top: 32px; }
+  .swipe { max-width: 1180px; margin: 0 auto; }
+  .offer-card { width: calc(50% - 6px); }
+  .ws-card { width: calc(25% - 9px); }
+  .team-photo { aspect-ratio: 21 / 9; }
+  .case-head { aspect-ratio: 21 / 8; }
+  .case-body { grid-template-columns: repeat(3, minmax(0, 1fr)); padding: 28px; }
+  .big-mark { right: -6%; bottom: -40%; width: 46%; }
+}
+</style>
+<style>
+/* Unterseite: Führungskräfte entwickeln — erweitert die bestehenden Komponenten */
+:root { padding-top: env(safe-area-inset-top, 0px); padding-bottom: env(safe-area-inset-bottom, 0px); }
+body { margin: 0; }
+img { max-width: 100%; }
+[hidden] { display: none !important; }
+.desk-nav a[aria-current="page"], .nav a[aria-current="page"] { color: var(--wald); box-shadow: inset 0 -3px 0 var(--helios); }
+.sub-hero h1 { font-size: clamp(38px, 10.5vw, 76px); max-width: 14em; }
+.sub-hero .hero-text { gap: 16px; padding-bottom: 40px; grid-template-columns: minmax(0, 1fr); }
+.sub-hero .hero-text p { max-width: 34em; }
+.offer-cards { padding-block: 8px 56px; display: grid; gap: 20px; }
+.offer-block { display: flex; flex-direction: column; border-radius: 22px; overflow: hidden; background: var(--wald-soft); }
+.offer-photo { aspect-ratio: 16 / 11; display: flex; align-items: flex-end; flex: none; }
+.offer-photo .inner { padding: 20px 22px; width: 100%; }
+.offer-photo h2 { font-size: clamp(28px, 7.6vw, 40px); hyphens: manual; -webkit-hyphens: manual; overflow-wrap: break-word; }
+.offer-text { padding: 22px 22px 26px; display: flex; flex-direction: column; gap: 14px; flex: 1; }
+.offer-text p { max-width: 34em; }
+.more { align-self: flex-start; margin-top: auto; display: inline-flex; align-items: center; min-height: 44px; font-weight: 700; font-size: 17px; color: var(--wald); text-decoration: none; border-bottom: 3px solid var(--helios); }
+.more:hover { border-bottom-color: var(--wald); }
+.crosslink { background: var(--helios); color: var(--wald); padding-block: 56px 60px; }
+.crosslink .wrap { display: grid; gap: 20px; }
+.crosslink h2 { font-size: clamp(34px, 9.5vw, 58px); max-width: 12em; }
+.crosslink p { max-width: 34em; font-size: 18px; }
+.crosslink .btn { justify-self: start; }
+.final .lead { font-size: 19px; color: #DCE6E0; max-width: 32em; }
+@media (min-width: 900px) {
+  .offer-cards { grid-template-columns: repeat(3, minmax(0, 1fr)); align-items: stretch; }
+}
+
+
+/* Unterseite: Individuelles Coaching */
+.backlink { padding-block: 14px 0; }
+.backlink a { display: inline-flex; align-items: center; min-height: 44px; font-weight: 700; font-size: 15px; color: var(--wald); text-decoration: none; }
+.faq { padding-block: 16px 56px; }
+.faq .wrap { display: grid; gap: 18px; }
+.faq .acc summary h3 { font-size: clamp(22px, 6vw, 32px); font-weight: 700; line-height: 1.15; color: var(--wald); margin: 0; }
+.final-cta { padding-block: 56px 64px; }
+.pull { margin: 20px 0; padding-block: 28px; border-top: 3px solid var(--helios); border-bottom: 3px solid var(--helios); font-size: clamp(28px, 7.6vw, 46px); font-weight: 700; line-height: 1.15; letter-spacing: -0.015em; color: var(--wald); text-align: center; text-wrap: balance; }
+.pair { display: grid; gap: 18px; padding-block: 8px; }
+.pair-card { border-radius: 22px; padding: 24px 22px; font-size: 17px; }
+.pair-fach { background: var(--wald-soft); color: var(--ink); }
+.pair-person { background: var(--wald); color: #FFFFFF; }
+.kernsatz { font-size: clamp(26px, 7vw, 40px); font-weight: 700; line-height: 1.15; letter-spacing: -0.015em; color: var(--wald); max-width: 18em; padding-block: 12px; }
+@media (min-width: 900px) { .sub-hero .hero-text { max-width: 860px; } }
+.hero-text mark { background: linear-gradient(transparent 52%, rgba(255,177,8,.6) 52%); color: inherit; padding: 0 .08em; -webkit-box-decoration-break: clone; box-decoration-break: clone; }
+.acc { border-top: 2px solid var(--wald); }
+.acc:last-child { border-bottom: 2px solid var(--wald); }
+.acc summary { list-style: none; cursor: pointer; display: flex; align-items: center; justify-content: space-between; gap: 16px; min-height: 76px; padding-block: 18px; }
+.acc summary::-webkit-details-marker { display: none; }
+.acc summary h2 { font-size: clamp(26px, 7vw, 40px); color: var(--wald); hyphens: manual; -webkit-hyphens: manual; }
+.acc-icon { flex: none; width: 44px; height: 44px; border-radius: 50%; background: var(--helios); color: var(--wald); display: flex; align-items: center; justify-content: center; font-size: 26px; font-weight: 700; transition: transform .2s; }
+.acc[open] .acc-icon { transform: rotate(45deg); }
+.acc-body { padding-bottom: 28px; display: grid; gap: 14px; }
+.acc-body p { max-width: 34em; }
+.acc-body .more { margin-top: 0; justify-self: start; }
+@media (prefers-reduced-motion: reduce) { .acc-icon { transition: none; } }
+@media (min-width: 900px) {
+  .faq .wrap { max-width: 860px; }
+}
+
+
+/* Vorlage: Workshop-Unterseite */
+.ws-intro { display: grid; gap: 14px; }
+.ws-block { padding-block: 40px; }
+.ws-block > .wrap { display: grid; gap: 18px; }
+.ws-block h2 { font-size: clamp(28px, 7.6vw, 44px); color: var(--wald); }
+.outcomes { list-style: none; margin: 0; padding: 0; display: grid; gap: 12px; }
+.outcomes li { background: var(--wald-soft); border-radius: 20px; padding: 18px 20px; display: flex; gap: 14px; align-items: flex-start; font-size: 17px; color: var(--wald); }
+.outcomes svg { flex: none; width: 28px; height: 28px; margin-top: 1px; }
+.facts-panel { background: var(--wald); color: #FFFFFF; border-radius: 22px; padding: 24px 22px; display: grid; gap: 18px; }
+.facts-panel h2 { color: #FFFFFF; }
+.facts-list { margin: 0; display: grid; gap: 0; }
+.facts-list > div { display: grid; grid-template-columns: minmax(0, 7em) minmax(0, 1fr); gap: 12px; padding-block: 14px; border-top: 1px solid #2A4A3C; }
+.facts-list dt { font-size: 13px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--helios); padding-top: 3px; }
+.facts-list dd { margin: 0; font-size: 18px; font-weight: 700; }
+.facts-note { font-size: 15px; color: #DCE6E0; max-width: 34em; }
+.adapt { background: var(--helios); color: var(--wald); border-radius: 22px; padding: 24px 22px; display: grid; gap: 10px; }
+.adapt h2 { font-size: clamp(24px, 6.6vw, 34px); color: var(--wald); }
+.adapt p { max-width: 34em; }
+.final .lead { font-size: 19px; color: #DCE6E0; max-width: 32em; }
+.tpl-flag { font-size: 11px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; background: var(--helios); color: var(--wald); border-radius: 999px; padding: 4px 10px; justify-self: start; }
+@media (min-width: 900px) {
+  .outcomes { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .ws-split { grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr); align-items: start; column-gap: 24px; }
+  .ws-split > h2 { grid-column: 1 / -1; }
+}
+
+.ws-next { padding-block: 8px 48px; }
+.ws-next .wrap { display: grid; gap: 12px; }
+.next-card { position: relative; display: flex; align-items: flex-end; min-height: 150px; border-radius: 22px; text-decoration: none; color: #FFFFFF; }
+.next-card .inner { padding: 20px; display: flex; align-items: flex-end; justify-content: space-between; gap: 16px; width: 100%; }
+.next-card .lbl { display: grid; gap: 6px; min-width: 0; }
+.next-card .lbl span { font-size: 13px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--helios); }
+.next-card .lbl b { font-size: clamp(22px, 6vw, 30px); line-height: 1.15; overflow-wrap: break-word; }
+.next-card .arrow { flex: none; width: 48px; height: 48px; border-radius: 50%; background: var(--helios); color: var(--wald); display: flex; align-items: center; justify-content: center; font-size: 24px; font-weight: 700; }
+.ws-pager { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; }
+.ws-pager a { display: inline-flex; align-items: center; min-height: 44px; font-weight: 700; font-size: 15px; color: var(--wald); text-decoration: none; }
+.ws-pager .count { font-size: 14px; color: var(--muted); }
+@media (min-width: 900px) { .ws-next .wrap { max-width: 860px; } .next-card { min-height: 190px; } }
+</style>
+<style id="design-css">
+/* Lange Titel nicht abschneiden */
+h1 { hyphens: manual; -webkit-hyphens: manual; overflow-wrap: break-word; }
+</style>
+<style id="nav-fit">.desk-nav a { white-space: nowrap; } @media (min-width: 900px) { .top .wrap { gap: 10px; } .desk-nav { gap: 14px; font-size: 15px; } .desk-nav .btn { padding: 0 14px; font-size: 14px; min-height: 42px; } .logo svg { height: 24px; } } @media (min-width: 900px) and (max-width: 1099px) { .desk-nav { gap: 9px; font-size: 13px; } .desk-nav .btn { padding: 0 10px; font-size: 12.5px; min-height: 38px; } .logo svg { height: 20px; } .logo-mark-anim img { height: 24px !important; } }</style>
+<style id="lang-css">.lang-switch { display: inline-flex; align-items: center; justify-content: center; gap: 6px; min-height: 44px; min-width: 44px; padding: 0 8px; border-radius: 999px; text-decoration: none; color: var(--wald); font-weight: 700; font-size: 13px; flex: none; } .lang-switch svg { width: 28px; height: 18px; border-radius: 3px; box-shadow: 0 0 0 1px rgba(5,45,28,.18); display: block; } .lang-switch:hover svg, .lang-switch:focus-visible svg { box-shadow: 0 0 0 2px var(--helios); } .lang-switch:focus-visible { outline: 3px solid var(--helios); outline-offset: 2px; } .lang-switch.ls-m { margin-left: auto; } .desk-nav .lang-switch { min-width: 40px; padding: 0 4px; } @media (min-width: 900px) { .lang-switch.ls-m { display: none; } } @media (max-width: 899.98px) { .desk-nav .lang-switch { display: none; } }</style>
+
+<style id="ar-css">
+.ar-head { padding-block: 16px 20px; }
+.ar-head .wrap, .ar-hero .wrap, .ar-body .wrap { max-width: 820px; }
+.ar-head .wrap { display: grid; gap: 14px; }
+.ar-head h1 { font-size: clamp(30px, 7.5vw, 52px); color: var(--wald); line-height: 1.12; }
+.ar-tag { justify-self: start; font-size: 12px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; border-radius: 999px; padding: 4px 10px; background: var(--helios); color: var(--wald); }
+.ar-meta { font-size: 15px; color: var(--muted); }
+.ar-hero img { display: block; width: 100%; aspect-ratio: 16 / 9; object-fit: cover; border-radius: 20px; background: var(--wald-soft); }
+.ar-body { padding-block: 28px 64px; }
+.ar-body .prose { max-width: 680px; }
+.prose > * + * { margin-top: 1em; }
+.prose p, .prose li { font-size: 17px; line-height: 1.65; }
+.prose h2 { font-size: 22px; color: var(--wald); margin-top: 1.8em; line-height: 1.25; }
+.prose ul, .prose ol { padding-left: 1.3em; display: grid; gap: .45em; }
+.prose figure { margin: 1.6em 0; }
+.prose figure img { display: block; width: 100%; height: auto; border-radius: 12px; border: 1px solid var(--line); }
+.prose em { color: var(--muted); }
+.prose a { color: var(--wald); font-weight: 600; }
+.ar-source { margin-top: 2.4em !important; padding-top: 1.2em; border-top: 1px solid var(--line); font-size: 14px !important; color: var(--muted); }
+.im-body { padding-block: 8px 64px; }
+.im-body .wrap { max-width: 820px; }
+.im-body h1 { font-size: clamp(30px, 7.5vw, 52px); color: var(--wald); margin-bottom: .6em; }
+.im-body h2 { font-size: 20px; color: var(--wald); margin-top: 1.8em; }
+.im-body h3 { font-size: 18px; color: var(--wald); margin-top: 1.6em; }
+.im-body p { max-width: 680px; margin-top: .7em; }
+</style>
+<style id="img-focus">/* Bildfokus je Motiv: Köpfe bleiben in allen Ausschnitten sichtbar */ img[src="img/w1.jpg"] { object-position: 30% 45% !important; } img[src="img/ws-effektive-meetings.jpg"] { object-position: 78% 30% !important; } img[src="img/w2.jpg"] { object-position: 40% 14% !important; } img[src="img/w3.jpg"] { object-position: 58% 22% !important; } img[src="img/w4.jpg"] { object-position: 55% 18% !important; } img[src="img/coaching.jpg"] { object-position: 24% 16% !important; } img[src="img/team.jpg"] { object-position: 50% 22% !important; } img[src="img/hero.jpg"] { object-position: 50% 32% !important; } img[src="img/fall.jpg"] { object-position: 50% 28% !important; } img[src="img/organisation.jpg"] { object-position: 45% 45% !important; } img[src="img/ws-high-performance.jpg"] { object-position: 50% 30% !important; } img[src="img/strategie.jpg"] { object-position: 60% 30% !important; } img[src="img/arbeitsweisen.jpg"] { object-position: 40% 22% !important; } img[src="img/leadership-programme.jpg"] { object-position: 45% 35% !important; } img[src="img/learn-connect.jpg"] { object-position: 50% 28% !important; } img[src="img/events.jpg"] { object-position: 50% 45% !important; }</style>
+</head>
+<body>
+<svg aria-hidden="true" height="0" style="position:absolute" width="0"><defs>
+<path d="M82.75,41.71l-15.4-4.85,16.99-18.81c1.77-1.95,1.61-4.96-.36-6.72-1.96-1.76-4.98-1.6-6.75.36l-19.89,22.03-12.95-4.08,30.81-20.94c2.18-1.48,2.74-4.44,1.25-6.61-1.49-2.17-4.46-2.73-6.64-1.25l-36.94,25.11L20.93,3.3c-1.23-2.33-4.12-3.22-6.45-2-2.34,1.22-3.23,4.1-2.01,6.43l7.49,14.2-13.75-4.33c-2.52-.79-5.2.6-6,3.1-.8,2.51.6,5.18,3.12,5.97l19.44,6.13-17.94,12.19c-2.18,1.48-2.74,4.44-1.25,6.61.93,1.35,2.42,2.08,3.95,2.08.93,0,1.87-.27,2.69-.83l19.18-13.04,8.27,15.67-11.67,12.92c-1.77,1.95-1.61,4.96.36,6.72.91.82,2.06,1.22,3.19,1.22,1.31,0,2.61-.53,3.55-1.58l9.3-10.3,13.18,24.97c.86,1.62,2.52,2.55,4.24,2.55.75,0,1.51-.18,2.22-.55,2.34-1.22,3.23-4.1,2.01-6.43l-14.82-28.1,11.1-12.29,19.54,6.16c.48.15.97.22,1.44.22,2.03,0,3.91-1.29,4.56-3.32.79-2.51-.6-5.18-3.12-5.97h0ZM44.49,47.94l-5.26-9.96,11.09,3.5-5.84,6.46h0Z" id="mk1"></path>
+<path d="M99.13,51.23l-20.31-7.34,12.81-3.17c2.57-.63,4.13-3.24,3.5-5.81-.63-2.57-3.23-4.14-5.8-3.51l-26.77,6.62-13.96-5.04,6.04-27.13c.57-2.59-1.05-5.15-3.63-5.73-2.58-.58-5.14,1.05-5.72,3.64l-5.78,25.94L6.42,17.74c-2.49-.9-5.23.4-6.13,2.89-.9,2.49.39,5.25,2.88,6.15l34.25,12.37-1.2,5.4-21.23,5.25c-2.57.63-4.13,3.24-3.5,5.81.54,2.19,2.49,3.65,4.65,3.65.38,0,.77-.05,1.15-.14l16.6-4.11-2.72,12.19-26.67,1.67c-2.64.17-4.65,2.45-4.48,5.09.16,2.54,2.27,4.5,4.77,4.5.1,0,.2,0,.3,0l23.9-1.5-5.34,23.96c-.57,2.59,1.05,5.16,3.63,5.73.35.08.7.11,1.05.11,2.19,0,4.17-1.52,4.67-3.76l5.94-26.68,49.89-3.13c2.64-.17,4.65-2.45,4.48-5.09-.16-2.65-2.44-4.66-5.08-4.49l-47.11,2.96,3.15-14.14,17.78-4.4,33.84,12.22c.54.19,1.08.28,1.62.28,1.96,0,3.8-1.22,4.51-3.17.9-2.49-.4-5.25-2.88-6.15h0Z" id="mk2"></path>
+<path d="M91.47,54.55l-36.13,8.32-4.18-19.14,41.37.06h0c2.62,0,4.74-2.12,4.75-4.74,0-2.62-2.12-4.75-4.74-4.75l-41.92-.06,22.6-20.27c1.95-1.75,2.11-4.75.36-6.7-1.75-1.95-4.75-2.11-6.7-.36l-19.88,17.83-4.59-21c-.56-2.56-3.09-4.18-5.65-3.62-2.56.56-4.18,3.09-3.62,5.65l5.74,26.27-2.45,2.2-31.68-.05h0C2.13,34.17,0,36.29,0,38.91c0,2.62,2.12,4.75,4.74,4.75l21.13.03-6.82,6.12c-1.95,1.75-2.11,4.75-.36,6.7.94,1.04,2.23,1.58,3.53,1.58,1.13,0,2.26-.4,3.17-1.21l14.67-13.16h1.38l4.65,21.28-24.93,5.74c-2.56.59-4.15,3.14-3.56,5.69.5,2.19,2.46,3.68,4.62,3.68.35,0,.71-.04,1.07-.12l24.83-5.72,6.68,30.58c.49,2.22,2.45,3.74,4.63,3.74.33,0,.68-.03,1.02-.11,2.56-.56,4.18-3.09,3.62-5.65l-6.7-30.69,36.24-8.35c2.56-.59,4.15-3.14,3.56-5.69-.59-2.56-3.14-4.15-5.69-3.56h0Z" id="mk3"></path>
+</defs></svg>
+<header class="top">
+<div class="wrap">
+<a aria-label="OrgVolution home page" class="logo" href="en-index.html"><svg aria-label="OrgVolution" role="img" viewbox="0 0 593 92"><path d="M82.75,41.71l-15.4-4.85,16.99-18.81c1.77-1.95,1.61-4.96-.36-6.72-1.96-1.76-4.98-1.6-6.75.36l-19.89,22.03-12.95-4.08,30.81-20.94c2.18-1.48,2.74-4.44,1.25-6.61-1.49-2.17-4.46-2.73-6.64-1.25l-36.94,25.11L20.93,3.3c-1.23-2.33-4.12-3.22-6.45-2-2.34,1.22-3.23,4.1-2.01,6.43l7.49,14.2-13.75-4.33c-2.52-.79-5.2.6-6,3.1-.8,2.51.6,5.18,3.12,5.97l19.44,6.13-17.94,12.19c-2.18,1.48-2.74,4.44-1.25,6.61.93,1.35,2.42,2.08,3.95,2.08.93,0,1.87-.27,2.69-.83l19.18-13.04,8.27,15.67-11.67,12.92c-1.77,1.95-1.61,4.96.36,6.72.91.82,2.06,1.22,3.19,1.22,1.31,0,2.61-.53,3.55-1.58l9.3-10.3,13.18,24.97c.86,1.62,2.52,2.55,4.24,2.55.75,0,1.51-.18,2.22-.55,2.34-1.22,3.23-4.1,2.01-6.43l-14.82-28.1,11.1-12.29,19.54,6.16c.48.15.97.22,1.44.22,2.03,0,3.91-1.29,4.56-3.32.79-2.51-.6-5.18-3.12-5.97h0ZM44.49,47.94l-5.26-9.96,11.09,3.5-5.84,6.46h0Z" fill="#FFB108"></path><g transform="translate(0.08,-18.51)"><path d="M175.6,32.23c-2.6-2.79-5.68-4.97-9.22-6.54-3.55-1.56-7.43-2.35-11.67-2.35s-8.03.78-11.58,2.35c-3.55,1.57-6.62,3.75-9.22,6.54-2.6,2.79-4.61,6.05-6,9.78-1.4,3.73-2.1,7.76-2.1,12.09s.7,8.36,2.1,12.09c1.4,3.73,3.4,6.99,6,9.78,2.6,2.79,5.68,4.97,9.22,6.54,3.54,1.56,7.4,2.35,11.58,2.35s8.12-.78,11.67-2.35c3.54-1.56,6.62-3.75,9.22-6.54,2.6-2.79,4.62-6.05,6.05-9.78,1.43-3.73,2.15-7.76,2.15-12.09s-.72-8.36-2.15-12.09c-1.43-3.73-3.45-6.99-6.05-9.78ZM172,65.47c-1.69,3.36-4.02,6.01-6.99,7.95-2.97,1.94-6.41,2.9-10.29,2.9s-7.24-.97-10.21-2.9c-2.97-1.93-5.29-4.58-6.95-7.95-1.66-3.36-2.49-7.15-2.49-11.36s.83-8.08,2.49-11.41c1.66-3.33,3.98-5.97,6.95-7.9,2.97-1.93,6.38-2.9,10.21-2.9s7.32.97,10.29,2.9c2.97,1.94,5.31,4.58,6.99,7.95,1.68,3.36,2.53,7.15,2.53,11.36s-.85,8-2.53,11.36Z" fill="#052D1C"></path><path d="M220,39.23c-1.09-.8-2.37-1.2-3.86-1.2-1.77,0-3.48.29-5.1.85-1.63.57-3.1,1.37-4.42,2.39-1.32,1.02-2.45,2.22-3.39,3.59-.48.69-.89,1.41-1.24,2.16v-3.61c0-1.25-.42-2.29-1.24-3.12-.83-.83-1.84-1.24-3.05-1.24s-2.29.41-3.09,1.24c-.8.83-1.2,1.87-1.2,3.12v36.23c0,1.25.4,2.29,1.2,3.12.8.83,1.83,1.24,3.09,1.24s2.22-.41,3.05-1.24c.83-.83,1.24-1.87,1.24-3.12v-20.51c0-2.05.3-3.9.9-5.55.6-1.65,1.42-3.09,2.45-4.31,1.03-1.22,2.17-2.15,3.43-2.78,1.26-.62,2.49-.94,3.69-.94,1.08,0,2.03.19,2.83.56.8.37,1.63.56,2.49.56.97,0,1.86-.35,2.66-1.07.8-.71,1.2-1.84,1.2-3.38,0-1.2-.54-2.19-1.63-2.99h0Z" fill="#052D1C"></path><path d="M264.17,38.38c-1.26,0-2.29.43-3.09,1.28-.8.85-1.2,1.88-1.2,3.08v2.38c-.77-.97-1.73-1.93-2.87-2.85-1.51-1.23-3.3-2.23-5.36-3.03-2.06-.8-4.32-1.2-6.78-1.2-3.95,0-7.51,1.01-10.68,3.03-3.17,2.02-5.71,4.79-7.59,8.29-1.89,3.5-2.83,7.53-2.83,12.09s.94,8.59,2.83,12.09c1.89,3.5,4.43,6.27,7.63,8.29,3.2,2.02,6.83,3.03,10.89,3.03,1.94,0,3.85-.33,5.7-.98,1.86-.65,3.5-1.5,4.93-2.52,1.43-1.03,2.59-2.15,3.48-3.38.24-.34.45-.67.64-1v4.46c0,3.64-1.16,6.52-3.48,8.63-2.32,2.11-5.76,3.16-10.34,3.16-1.32,0-2.72-.19-4.2-.56-1.49-.37-2.83-.78-4.03-1.24-1.2-.46-2.09-.77-2.66-.94-1.26-.46-2.37-.54-3.34-.26-.98.29-1.74,1.05-2.32,2.31-.4.91-.39,1.82.04,2.73.43.91,1.3,1.71,2.61,2.39.63.51,1.76,1.02,3.39,1.54,1.63.51,3.42.95,5.36,1.32,1.94.37,3.63.56,5.06.56,4.06,0,7.79-.71,11.2-2.14,3.4-1.42,6.14-3.66,8.19-6.71,2.06-3.05,3.09-6.99,3.09-11.83v-37.69c0-1.25-.4-2.29-1.2-3.12-.8-.83-1.83-1.24-3.09-1.24h0ZM258.51,69.44c-1.2,2.36-2.86,4.22-4.98,5.55-2.12,1.34-4.57,2.01-7.38,2.01s-5.26-.69-7.38-2.05c-2.12-1.37-3.77-3.22-4.98-5.55-1.2-2.33-1.8-4.98-1.8-7.95s.6-5.61,1.8-7.95c1.2-2.34,2.86-4.19,4.98-5.55,2.11-1.37,4.57-2.05,7.38-2.05s5.26.67,7.38,2.01c2.11,1.34,3.78,3.19,4.98,5.55,1.2,2.36,1.8,5.03,1.8,7.99s-.6,5.63-1.8,7.99h0Z" fill="#052D1C"></path><path d="M330.45,28.12c0-1.14-.43-2.11-1.29-2.9-.86-.8-1.89-1.2-3.09-1.2-1.83,0-3.15.91-3.95,2.73l-17.32,43.45-18.36-43.37c-.86-1.88-2.2-2.82-4.03-2.82-.92,0-1.86.37-2.83,1.11-.98.74-1.46,1.77-1.46,3.08,0,.34.03.67.08.98.06.31.14.61.26.9l21.7,51.18c.4.85.95,1.51,1.67,1.96.71.46,1.47.71,2.27.77.8,0,1.59-.23,2.36-.69.77-.45,1.38-1.17,1.85-2.14l21.7-51.09c.29-.69.43-1.34.43-1.96h0Z" fill="#052D1C"></path><path d="M363.18,41.07c-3.43-2.02-7.29-3.03-11.58-3.03s-8.15,1.01-11.58,3.03c-3.43,2.02-6.16,4.79-8.19,8.29-2.03,3.5-3.05,7.56-3.05,12.18s1.01,8.59,3.05,12.09c2.03,3.5,4.76,6.25,8.19,8.25,3.43,2,7.29,2.99,11.58,2.99s8.15-1,11.58-2.99c3.43-1.99,6.15-4.74,8.15-8.25,2-3.5,3-7.53,3-12.09s-1-8.67-3-12.18c-2-3.5-4.72-6.26-8.15-8.29ZM363.87,69.57c-1.26,2.34-2.96,4.16-5.1,5.47-2.14,1.31-4.53,1.96-7.16,1.96s-5.03-.65-7.2-1.96c-2.18-1.31-3.89-3.13-5.15-5.47-1.26-2.33-1.89-5.01-1.89-8.03s.63-5.85,1.89-8.16c1.26-2.31,2.97-4.13,5.15-5.47,2.17-1.34,4.58-2.01,7.2-2.01s5.02.67,7.16,2.01c2.14,1.34,3.85,3.16,5.1,5.47,1.26,2.31,1.89,5.03,1.89,8.16s-.63,5.7-1.89,8.03Z" fill="#052D1C"></path><path d="M387.2,20.78c-1.2,0-2.23.41-3.09,1.24-.86.83-1.29,1.87-1.29,3.12v54.51c0,1.25.41,2.29,1.24,3.12.83.83,1.85,1.24,3.05,1.24s2.22-.41,3.05-1.24c.83-.83,1.24-1.87,1.24-3.12V25.14c0-1.25-.39-2.29-1.16-3.12-.77-.83-1.79-1.24-3.05-1.24h0Z" fill="#052D1C"></path><path d="M435.2,39.06c-1.26,0-2.29.41-3.09,1.24-.8.83-1.2,1.87-1.2,3.12v22.47c0,3.7-.89,6.46-2.66,8.29-1.77,1.82-4.37,2.73-7.81,2.73s-5.93-.91-7.68-2.73c-1.74-1.82-2.62-4.58-2.62-8.29v-22.47c0-1.25-.42-2.29-1.24-3.12-.83-.83-1.84-1.24-3.05-1.24s-2.29.41-3.09,1.24c-.8.83-1.2,1.87-1.2,3.12v22.47c0,5.92,1.64,10.55,4.93,13.88,3.29,3.33,7.94,5,13.94,5s10.75-1.67,14.07-5c3.31-3.33,4.98-7.96,4.98-13.88v-22.47c0-1.25-.42-2.29-1.24-3.12-.83-.83-1.85-1.24-3.05-1.24h0Z" fill="#052D1C"></path><path d="M470.9,47.43c1.14,0,2.1-.37,2.87-1.11.77-.74,1.16-1.65,1.16-2.73,0-1.14-.39-2.09-1.16-2.86-.77-.77-1.73-1.15-2.87-1.15h-6.86v-6.75c0-1.25-.4-2.29-1.2-3.12-.8-.83-1.83-1.24-3.09-1.24s-2.22.41-3.05,1.24c-.83.83-1.24,1.87-1.24,3.12v6.75h-4.72c-1.14,0-2.1.37-2.88,1.11-.77.74-1.16,1.68-1.16,2.82s.39,2.01,1.16,2.78c.77.77,1.73,1.15,2.88,1.15h4.72v25.38c0,2.73.4,4.85,1.2,6.37.8,1.51,1.82,2.61,3.05,3.29,1.23.69,2.5,1.11,3.82,1.28,1.32.17,2.46.26,3.43.26,1.72,0,3.31-.43,4.8-1.28,1.49-.85,2.23-1.96,2.23-3.33,0-1.08-.29-1.93-.86-2.56-.57-.62-1.2-.94-1.89-.94s-1.27.11-1.76.34c-.49.23-1.04.34-1.67.34s-1.24-.11-1.85-.34c-.6-.23-1.07-.65-1.41-1.28-.34-.62-.52-1.45-.52-2.48v-25.04h6.86,0Z" fill="#052D1C"></path><path d="M491.85,24.84c-.75-.6-1.97-.9-3.69-.9-1.6,0-2.8.29-3.6.85-.8.57-1.2,1.57-1.2,2.99v1.37c0,1.42.37,2.44,1.12,3.03.74.6,1.94.9,3.61.9s2.96-.29,3.73-.85c.77-.57,1.16-1.6,1.16-3.08v-1.37c0-1.37-.38-2.35-1.12-2.95h0Z" fill="#052D1C"></path><path d="M488.16,38.72c-1.2,0-2.22.41-3.05,1.24-.83.83-1.24,1.87-1.24,3.12v36.57c0,1.25.41,2.29,1.24,3.12.83.83,1.85,1.24,3.05,1.24s2.29-.41,3.09-1.24c.8-.83,1.2-1.87,1.2-3.12v-36.57c0-1.25-.4-2.29-1.2-3.12-.8-.83-1.83-1.24-3.09-1.24Z" fill="#052D1C"></path><path d="M535.11,41.07c-3.43-2.02-7.29-3.03-11.58-3.03s-8.15,1.01-11.58,3.03c-3.43,2.02-6.16,4.79-8.19,8.29-2.03,3.5-3.05,7.56-3.05,12.18s1.01,8.59,3.05,12.09c2.03,3.5,4.76,6.25,8.19,8.25,3.43,2,7.29,2.99,11.58,2.99s8.15-1,11.58-2.99c3.43-1.99,6.15-4.74,8.15-8.25,2-3.5,3-7.53,3-12.09s-1-8.67-3-12.18c-2-3.5-4.72-6.26-8.15-8.29ZM535.8,69.57c-1.26,2.34-2.96,4.16-5.1,5.47-2.14,1.31-4.53,1.96-7.16,1.96s-5.03-.65-7.21-1.96c-2.17-1.31-3.89-3.13-5.15-5.47s-1.89-5.01-1.89-8.03.63-5.85,1.89-8.16c1.26-2.31,2.97-4.13,5.15-5.47,2.17-1.34,4.58-2.01,7.21-2.01s5.02.67,7.16,2.01c2.15,1.34,3.85,3.16,5.1,5.47,1.26,2.31,1.89,5.03,1.89,8.16s-.63,5.7-1.89,8.03Z" fill="#052D1C"></path><path d="M591.6,47.31c-.89-2.82-2.45-5.07-4.68-6.75-2.23-1.68-5.38-2.52-9.44-2.52-2,0-3.89.33-5.66.98-1.77.65-3.38,1.54-4.8,2.65-1.43,1.11-2.65,2.31-3.65,3.59-.2.26-.38.51-.56.76v-2.6c0-1.25-.42-2.29-1.24-3.12-.83-.83-1.85-1.24-3.05-1.24s-2.29.41-3.09,1.24c-.8.83-1.2,1.87-1.2,3.12v36.23c0,1.25.4,2.29,1.2,3.12.8.83,1.83,1.24,3.09,1.24s2.21-.41,3.05-1.24c.83-.83,1.24-1.87,1.24-3.12v-22.81c0-2.05.5-3.89,1.5-5.51,1-1.63,2.39-2.94,4.16-3.93,1.77-1,3.83-1.5,6.18-1.5,2.51,0,4.47.5,5.88,1.5,1.4,1,2.39,2.31,2.96,3.93.57,1.62.86,3.46.86,5.51v22.81c0,1.25.4,2.29,1.2,3.12.8.83,1.83,1.24,3.09,1.24s2.22-.41,3.05-1.24c.83-.83,1.24-1.87,1.24-3.12v-22.9c0-3.47-.44-6.62-1.33-9.44h0Z" fill="#052D1C"></path></g></svg></a>
+<nav aria-label="Main navigation" class="desk-nav">
+<a href="en-fuehrungskraefte-entwickeln.html">Services</a>
+<a href="en-fuehrungskompetenz-entwickeln.html">Workshops</a>
+<a href="en-events.html">Events</a>
+<a aria-current="page" href="en-perspektiven.html">Perspectives</a>
+<a href="en-arbeitsweise-1.html">How we work</a>
+<a href="en-ueber-uns.html">About us</a>
+<a class="btn btn-primary" href="en-erstgespraech.html">Book an intro call</a>
+      <a class="lang-switch ls-d" href="perspektive-artikel-5.html" hreflang="de" lang="de" aria-label="Auf Deutsch wechseln" title="Deutsch"><svg viewBox="0 0 5 3" aria-hidden="true" focusable="false"><path d="M0 0h5v3H0z" fill="#000"/><path d="M0 1h5v2H0z" fill="#D00"/><path d="M0 2h5v1H0z" fill="#FFCE00"/></svg></a>
+
+</nav>
+
+<a class="lang-switch ls-m" href="perspektive-artikel-5.html" hreflang="de" lang="de" aria-label="Auf Deutsch wechseln" title="Deutsch"><svg viewBox="0 0 5 3" aria-hidden="true" focusable="false"><path d="M0 0h5v3H0z" fill="#000"/><path d="M0 1h5v2H0z" fill="#D00"/><path d="M0 2h5v1H0z" fill="#FFCE00"/></svg></a>
+    <button aria-controls="mobile-nav" aria-expanded="false" class="menu-btn" id="menu-btn" type="button">
+<span aria-hidden="true" class="bars"><span></span><span></span><span></span></span>
+<span id="menu-label">Menu</span>
+</button>
+</div>
+<nav aria-label="Mobile navigation" class="nav" hidden="" id="mobile-nav">
+<div class="wrap">
+<ul>
+<li><a href="en-fuehrungskraefte-entwickeln.html">Services</a></li>
+<li><a href="en-fuehrungskompetenz-entwickeln.html">Workshops</a></li>
+<li><a href="en-events.html">Events</a></li>
+<li><a aria-current="page" href="en-perspektiven.html">Perspectives</a></li>
+<li><a href="en-arbeitsweise-1.html">How we work</a><a href="en-ueber-uns.html">About us</a></li>
+</ul>
+</div>
+</nav>
+</header>
+<main id="start">
+<nav aria-label="Back" class="backlink"><div class="wrap"><a href="en-perspektiven.html">← Perspectives</a></div></nav>
+<article lang="en">
+<header class="ar-head">
+<div class="wrap">
+<span class="ar-tag" lang="de">Article</span>
+<h1>Five Ingredients to Check if OKRs are Useful for Your Organization</h1>
+<p class="ar-meta" lang="de">by Samir Keck</p>
+</div>
+</header>
+<div class="ar-hero"><div class="wrap"><img alt="" src="img/articles/okrs.jpg"/></div></div>
+<div class="ar-body"><div class="wrap"><div class="prose">
+<p>Many companies perceive a competitive advantage in organizational designs and cultures that can be summarized under the umbrella of the New Work movement. While shifting a company into a new paradigm is incredibly challenging, many organizations are exploring tools, concepts, and the practices of new work organizations in order to progress.</p>
+<p>OKRs (Objectives and Key Results) are a goal-setting framework that numerous companies are implementing globally.</p>
+<p>There is a tremendous advantage to using OKRs, especially in product-led or agile tech companies. However, adapting them in different organizations presents its own set of challenges. That's why we are examining five factors to consider when deciding if OKRs make sense.</p>
+<h2>1. Absence of Other Goal-Setting Mechanisms</h2>
+<p>Any goal-setting framework works best when it is the sole framework in use. When competing goals exist, it becomes challenging to decide which framework to prioritize. Often, OKRs are used alongside other goal-setting mechanisms and are thus perceived as optional. Employees may choose to ignore them if they want to be promoted or achieve what truly matters to their leaders. Therefore, OKRs work best when they are the exclusive framework for prioritizing work.</p>
+<h2>2. Alignment with Leadership Culture of Value Optimization</h2>
+<p>The OKR framework places a strong emphasis on outcomes, which often entails eliminating work that companies traditionally undertook due to past practices or perceived value. Emphasizing outcomes is most effective when the leadership culture actively promotes this perspective within the teams. If leaders expect their teams to continue their existing work while adding OKRs on top, it may not yield the desired results. Ideally, leaders should be willing to eliminate as much unnecessary work as possible to enable a sharper focus. This environment is where OKRs deliver the highest value.</p>
+<h2>3. Quarterly/Half-Yearly Focus Shifts</h2>
+<p>In agile product development, organizations receive customer feedback and adjust their priorities accordingly. OKRs provide a framework that allows not only teams but also departments or entire organizations to work in this agile manner. Setting a focus for a specific iteration and realigning priorities after that iteration helps manage dependencies between teams or departments. Using one framework that incorporates these dependencies and ensures a consistent focus benefits the entire organization.</p>
+<h2>4. Low Routine Work</h2>
+<p>OKRs are most effective for teams facing high uncertainty regarding their next steps to achieve their goals. If all tasks are well-defined, and the team primarily engages in routine work, the added focus that OKRs provide may not be necessary. In such cases, the framework may become a burden for documentation rather than a supportive structure for maintaining focus. High routine work is often best managed using clear metrics and KPIs. OKRs are most beneficial when there is a degree of uncertainty, experimentation, or the pursuit of goals that haven't been attempted before.</p>
+<h2>5. Strong Understanding of OKRs</h2>
+<p>Adopting the OKR framework often requires a shift in mindset from a task and to-do list orientation to an outcome orientation. This shift can create psychological pressure for many teams, as team members can no longer simply say "task done" but must evaluate whether they achieved the impact they intended. Achieving impact is often not entirely within an individual's control, whereas completing a task is more predictable. Teams may be tempted to revert to their familiar landscape of tasks instead of focusing on outcomes. The OKR framework is most effective when organizations invest in building the necessary capabilities. Internal OKR experts who support facilitation, alignment processes, and the shift in mindset are crucial to successfully implement OKRs. Otherwise, OKRs can quickly devolve into a task list with excessive overhead.</p>
+<p>There are many more considerations for an organization to assess when considering OKRs, but if you notice that these five factors are not present, it serves as a red flag and offers insight into why OKRs might not gain traction in your organization.</p>
+<p class="ar-source" lang="de">Originally published on 21 February 2024 on orgvolution.de.</p>
+</div></div></div>
+</article>
+</main>
+<footer>
+<div class="wrap">
+<span>OrgVolution GmbH · Berlin</span>
+<span style="display:flex;gap:20px"><a href="en-impressum.html">Legal notice</a><a href="en-index.html">Privacy policy</a></span>
+</div>
+</footer>
+<div class="bookbar">
+<svg aria-hidden="true" viewbox="0 0 104 108"><use fill="#FFB108" href="#mk1"></use></svg>
+<a class="btn btn-primary" href="en-erstgespraech.html">Book an intro call</a>
+</div>
+<script>
+(function () {
+  var btn = document.getElementById('menu-btn');
+  var nav = document.getElementById('mobile-nav');
+  var label = document.getElementById('menu-label');
+  function setOpen(open) {
+    nav.hidden = !open;
+    btn.setAttribute('aria-expanded', String(open));
+    label.textContent = open ? 'Close' : 'Menu';
+  }
+  btn.addEventListener('click', function () { setOpen(nav.hidden); });
+  nav.addEventListener('click', function (e) { if (e.target.closest('a')) setOpen(false); });
+})();
+
+</script>
+</body>
+</html>
