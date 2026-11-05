@@ -334,6 +334,27 @@ h1 { hyphens: manual; -webkit-hyphens: manual; overflow-wrap: break-word; }
 }
 </style>
 <style id="img-focus">/* Bildfokus je Motiv: Köpfe bleiben in allen Ausschnitten sichtbar */ img[src="img/w1.jpg"] { object-position: 30% 45% !important; } img[src="img/ws-effektive-meetings.jpg"] { object-position: 78% 30% !important; } img[src="img/w2.jpg"] { object-position: 40% 14% !important; } img[src="img/w3.jpg"] { object-position: 58% 22% !important; } img[src="img/w4.jpg"] { object-position: 55% 18% !important; } img[src="img/coaching.jpg"] { object-position: 24% 16% !important; } img[src="img/team.jpg"] { object-position: 50% 22% !important; } img[src="img/hero.jpg"] { object-position: 50% 32% !important; } img[src="img/fall.jpg"] { object-position: 50% 28% !important; } img[src="img/organisation.jpg"] { object-position: 45% 45% !important; } img[src="img/ws-high-performance.jpg"] { object-position: 50% 30% !important; } img[src="img/strategie.jpg"] { object-position: 60% 30% !important; } img[src="img/arbeitsweisen.jpg"] { object-position: 40% 22% !important; } img[src="img/leadership-programme.jpg"] { object-position: 45% 35% !important; } img[src="img/learn-connect.jpg"] { object-position: 50% 28% !important; } img[src="img/events.jpg"] { object-position: 50% 45% !important; }</style>
+<style id="rf-css">
+.rf { background: #FFFFFF; color: var(--ink); border-radius: 24px; padding: 22px; display: grid; gap: 16px; max-width: 720px; }
+.rf h3 { font-size: 22px; color: var(--wald); }
+.rf-grid { display: grid; gap: 14px; }
+@media (min-width: 640px) { .rf-grid { grid-template-columns: 1fr 1fr; } .rf-full { grid-column: 1 / -1; } }
+.rf label { display: block; font-size: 14px; font-weight: 700; color: var(--wald); }
+.rf label > input, .rf label > select, .rf label > textarea { display: block; margin-top: 6px; }
+.rf input[type=text], .rf input[type=email], .rf select, .rf textarea { font: inherit; font-weight: 500; font-size: 16px; color: var(--ink); border: 1.5px solid #B7C9BF; border-radius: 12px; padding: 12px 14px; background: #FFFFFF; width: 100%; }
+.rf textarea { min-height: 96px; resize: vertical; }
+.rf input:focus-visible, .rf select:focus-visible, .rf textarea:focus-visible { outline: 3px solid var(--helios); outline-offset: 1px; border-color: var(--wald); }
+.rf .rf-req { color: #B42318; }
+.rf-check { display: flex !important; grid-template-columns: none; gap: 10px !important; align-items: flex-start; font-weight: 500 !important; color: var(--ink) !important; line-height: 1.45; }
+.rf-check input { width: 20px; height: 20px; margin-top: 2px; flex: none; accent-color: var(--wald); }
+.rf-check a { color: var(--wald); font-weight: 700; }
+.rf-hp { position: absolute !important; left: -9999px !important; }
+.rf-note { font-size: 14px; color: var(--muted); }
+.rf .btn { justify-self: start; border: 0; font-family: inherit; cursor: pointer; }
+.rf-status { font-size: 15px; font-weight: 700; padding: 12px 14px; border-radius: 12px; }
+.rf-status.ok { background: var(--wald-soft); color: var(--wald); }
+.rf-status.err { background: #FDECEA; color: #B42318; }
+</style>
 </head>
 <body>
 <svg aria-hidden="true" height="0" style="position:absolute" width="0"><defs>
@@ -393,8 +414,7 @@ h1 { hyphens: manual; -webkit-hyphens: manual; overflow-wrap: break-word; }
 <section aria-label="Reserve" class="ed-cta">
 <div class="wrap">
 <span class="meta">3 days · Berlin · <span class="ph">[Dates]</span></span>
-<!-- TODO Anmeldung: Ziel-URL für "Reserve your place" fehlt -->
-<a class="btn btn-primary" href="#reserve">Reserve your place →</a>
+<a class="btn btn-primary" href="#register">Reserve your place →</a>
 </div>
 </section>
 <section aria-labelledby="ed-skip" class="ed-sec">
@@ -485,8 +505,29 @@ h1 { hyphens: manual; -webkit-hyphens: manual; overflow-wrap: break-word; }
 <div class="wrap">
 <h2 id="final-titel">Take your <em>place</em></h2>
 <p class="lead">Eight seats, two trainers, three days. If that's the kind of setting you want to practice in, reserve a place.</p>
-<!-- TODO Anmeldung: Ziel-URL fehlt -->
-<a class="btn btn-primary" href="#reserve">Reserve your place for <span class="ph" style="color:inherit">[Dates]</span> →</a>
+<!-- ANMELDEFORMULAR: sendet über Web3Forms (api.web3forms.com) an die im Access Key hinterlegte E-Mail-Adresse. Konfiguration im Script-Block ANMELDUNG unten. -->
+<form class="rf" id="register" novalidate="">
+<h3>Register</h3>
+<input name="subject" type="hidden" value="Anmeldung: Moderation Intensive"/>
+<input name="from_name" type="hidden" value="OrgVolution Website"/>
+<input name="event" type="hidden" value="Moderation Intensive (Berlin, 3 days)"/>
+<input aria-hidden="true" autocomplete="off" class="rf-hp" name="botcheck" tabindex="-1" type="checkbox"/>
+<div class="rf-grid">
+<label class="rf-full">Preferred dates <span aria-hidden="true" class="rf-req">*</span>
+<select id="rf-dates" name="dates" required=""></select></label>
+<label>First name <span aria-hidden="true" class="rf-req">*</span><input autocomplete="given-name" name="first_name" required="" type="text"/></label>
+<label>Last name <span aria-hidden="true" class="rf-req">*</span><input autocomplete="family-name" name="last_name" required="" type="text"/></label>
+<label>Email <span aria-hidden="true" class="rf-req">*</span><input autocomplete="email" name="email" required="" type="email"/></label>
+<label>Company<input autocomplete="organization" name="company" type="text"/></label>
+<label class="rf-full">Role<input autocomplete="organization-title" name="role" type="text"/></label>
+<label class="rf-full">Billing address <span aria-hidden="true" class="rf-req">*</span><textarea autocomplete="street-address" name="billing_address" required=""></textarea></label>
+<label class="rf-full">Notes<textarea name="notes"></textarea></label>
+<label class="rf-check rf-full"><input name="terms_accepted" required="" type="checkbox" value="yes"/><span>I accept the <a href="en-teilnahmebedingungen.html" target="_blank">terms of participation</a> and have read the <a class="ph" href="#datenschutz">[privacy policy]</a>. <span aria-hidden="true" class="rf-req">*</span></span></label>
+</div>
+<p class="rf-note">Your registration is binding. You'll receive the invoice after the workshop.</p>
+<button class="btn btn-primary" type="submit">Register now →</button>
+<p aria-live="polite" class="rf-status" hidden="" id="rf-status" role="status"></p>
+</form>
 <p class="lead" style="font-size:16px">Round full? Join the waitlist and we'll let you know when the next round opens.</p>
 </div>
 </section>
@@ -515,6 +556,35 @@ h1 { hyphens: manual; -webkit-hyphens: manual; overflow-wrap: break-word; }
   nav.addEventListener('click', function (e) { if (e.target.closest('a')) setOpen(false); });
 })();
 
+</script>
+<script>
+/* ===== ANMELDUNG =====
+   WEB3FORMS_KEY: Access Key von web3forms.com (öffentlich, darf im HTML stehen). Die Anmeldungen gehen an die E-Mail-Adresse, mit der der Key erstellt wurde.
+   EVENT_DATES:   Auswahl im Formular. Neue Termine einfach ergänzen. */
+var WEB3FORMS_KEY = "";
+var EVENT_DATES = ["[Dates]"];
+/* ===== Ende ANMELDUNG ===== */
+(function () {
+  var form = document.getElementById('register'), status = document.getElementById('rf-status'), sel = document.getElementById('rf-dates');
+  EVENT_DATES.forEach(function (d) { var o = document.createElement('option'); o.textContent = d; o.value = d; sel.appendChild(o); });
+  function show(msg, ok) { status.textContent = msg; status.className = 'rf-status ' + (ok ? 'ok' : 'err'); status.hidden = false; }
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    if (!form.checkValidity()) { form.reportValidity(); return; }
+    if (!WEB3FORMS_KEY) { show('The registration form is not connected yet.', false); return; }
+    var data = Object.fromEntries(new FormData(form).entries());
+    if (data.botcheck) return;
+    data.access_key = WEB3FORMS_KEY; data.subject = 'Anmeldung: Moderation Intensive – ' + data.first_name + ' ' + data.last_name;
+    var btn = form.querySelector('button[type=submit]'); btn.disabled = true;
+    fetch('https://api.web3forms.com/submit', { method: 'POST', headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' }, body: JSON.stringify(data) })
+      .then(function (r) { return r.json(); })
+      .then(function (j) {
+        if (j.success) { form.querySelectorAll('input:not([type=hidden]), select, textarea, button').forEach(function (el) { el.disabled = true; }); show("Thank you! We've received your registration and will confirm it by email shortly.", true); }
+        else { btn.disabled = false; show('Something went wrong. Please try again or email us at samir.keck@orgvolution.de.', false); }
+      })
+      .catch(function () { btn.disabled = false; show('Something went wrong. Please try again or email us at samir.keck@orgvolution.de.', false); });
+  });
+})();
 </script>
 </body>
 </html>
